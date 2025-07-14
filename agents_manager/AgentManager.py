@@ -2,7 +2,6 @@ import json
 import logging
 from typing import List, Optional, Any, Generator, Dict, Callable
 
-from agents_manager.models import Genai
 from agents_manager.Container import Container
 from agents_manager.utils import write_log
 from agents_manager.Agent import Agent
@@ -65,17 +64,14 @@ class AgentManager:
         return _, agent
 
     @staticmethod
-    def get_model_current_messages(agent: Agent, current_messages: list):
-        if type(agent.get_model()) == Genai:
-            return current_messages
-        else:
-            new_current_messages = []
+    def get_model_current_messages(current_messages: list):
+        new_current_messages = []
 
-            for curr in current_messages:
-                if curr["role"] != "system":
-                    new_current_messages.append(curr)
+        for curr in current_messages:
+            if curr["role"] != "system":
+                new_current_messages.append(curr)
 
-            return new_current_messages
+        return new_current_messages
 
     @staticmethod
     def _update_current_message(

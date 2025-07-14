@@ -1,5 +1,5 @@
+import os
 from typing import Any
-
 from openai import OpenAI
 
 from agents_manager.models import OpenAi
@@ -16,10 +16,11 @@ class DeepSeek(OpenAi):
         """
         super().__init__(name, **kwargs)
 
-        if name is None:
-            raise ValueError("A valid  DeepSeek model name is required")
-
-        self.client = OpenAI(
-            api_key=kwargs.get("api_key"),
-            base_url="https://api.deepseek.com"
-        )
+        if current_api_key := kwargs.get("api_key") or os.environ.get(
+            "DEEPSEEK_API_KEY"
+        ):
+            self.client = OpenAI(
+                api_key=current_api_key, base_url="https://api.deepseek.com"
+            )
+        else:
+            raise RuntimeError("Could not find Deepseek api key")
