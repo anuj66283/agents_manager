@@ -1,7 +1,7 @@
+import os
 from typing import Any
 
 from openai import OpenAI
-
 from agents_manager.models import OpenAi
 
 
@@ -19,7 +19,10 @@ class Grok(OpenAi):
         if name is None:
             raise ValueError("A valid  Grok model name is required")
 
-        self.client = OpenAI(
-            api_key=kwargs.get("api_key"),
-            base_url="https://api.x.ai/v1"
-        )
+        if current_api_key := kwargs.get("api_key") or os.environ.get("XAI_API_KEY"):
+
+            self.client = OpenAI(
+                api_key=current_api_key, base_url="https://api.x.ai/v1"
+            )
+        else:
+            raise RuntimeError("Could not find Grok api key")

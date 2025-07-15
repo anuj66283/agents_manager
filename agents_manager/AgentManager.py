@@ -349,7 +349,7 @@ class AgentManager:
         )
 
         return self.run_agent(
-            agent.name, self.get_model_current_messages(agent, current_messages)
+            agent.name, self.get_model_current_messages(current_messages)
         )
 
     def run_agent_stream(
@@ -399,6 +399,6 @@ class AgentManager:
         )
 
         yield from self.run_agent_stream(
-            agent.name, self.get_model_current_messages(agent, current_messages)
+            agent.name, self.get_model_current_messages(current_messages)
         )
         return

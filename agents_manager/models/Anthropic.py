@@ -23,7 +23,7 @@ class Anthropic(OpenAi):
             "ANTHROPIC_API_KEY"
         ):
             self.client = OpenAI(
-                api_key=current_api_key, base_url="https://api.anthropic.com"
+                api_key=current_api_key, base_url="https://api.anthropic.com/v1/"
             )
         else:
             raise RuntimeError("Could not find Anthropic api key")
